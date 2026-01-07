@@ -33,10 +33,16 @@ export default {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-gpu',
+      '--disable-software-rasterizer',
+      '--disable-extensions',
+      '--no-first-run',
+      '--no-zygote',
+      '--deterministic-fetch',
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--disable-blink-features=AutomationControlled',
       '--disable-web-security',
-      '--disable-features=IsolateOrigins',
-      '--disable-site-isolation-trials',
-      '--single-process'
+      '--allow-running-insecure-content',
+      '--disable-features=BlockInsecurePrivateNetworkRequests'
     ]
   }
 };
