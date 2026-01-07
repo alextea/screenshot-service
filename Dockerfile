@@ -3,7 +3,9 @@ FROM node:22-slim
 # Install Chromium and dependencies
 RUN apt-get update && apt-get install -y \
     chromium \
+    chromium-sandbox \
     fonts-liberation \
+    fonts-noto-color-emoji \
     libasound2 \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
@@ -17,6 +19,10 @@ RUN apt-get update && apt-get install -y \
     libxcomposite1 \
     libxdamage1 \
     libxrandr2 \
+    libxshmfence1 \
+    libxss1 \
+    libxtst6 \
+    ca-certificates \
     xdg-utils \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
@@ -39,7 +45,12 @@ COPY . .
 
 # Create non-root user for security
 RUN groupadd -r screenshot && useradd -r -g screenshot screenshot \
-    && chown -R screenshot:screenshot /app
+    && mkdir -p /tmp/.chrome \
+    && chown -R screenshot:screenshot /app /tmp/.chrome
+
+# Set Chrome user data directory
+ENV CHROME_DEVEL_SANDBOX=/usr/lib/chromium/chrome-sandbox \
+    XDG_CONFIG_HOME=/tmp/.chrome
 
 USER screenshot
 
